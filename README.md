@@ -6,6 +6,7 @@ Gateway MQTT orientado al control RF de interruptores Livolo y tambien los sopor
 Hace uso de la generacion interna de codigos de id remoto (testados en la practica hasta un total de 30 codigos) y de los codigos de escenas I y II (code 10 y code 18 de room 1) de Livolo lo que nos permite la gestion mediante comandos de ON y de OFF de forma separada y asi poder evitar usar los mas habituales comandos unicos de conmutacion ON/OFF.
 La programacion de los interruptores se hace de forma muy sencilla poniendo el interruptor en modo apredizaje o programacion (pulsandolo durante 5 segundos) y dejandolo en el estado de encendido o apagado que se requiera programar y a continuacion enviar el comando de encendido o apagado correspondiente al estado a programar del interruptor.
 La forma de la orden MQTT topic/subtopic y comando es la siguiente:
+
 livolo/switch1...30/0 o 1
 Ejemplo para encendido del switch 1
 l1volo/switch1/1
