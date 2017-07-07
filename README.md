@@ -1,6 +1,16 @@
 # RCSwitchMqttGate
-Remote Control of Livolo Switch &amp; Other 433Mhz Devices to MQTT
+Remote Control and MQTT Gateway of Livolo Switch & Other (RCSwitch library supported devices) 433Mhz devices
 
-Данный скрипт написан для чтения кодов сигналов от устройств и пультов по радиоканалу 433Мгц и отправки их на MQTT сервер, где можно их перехватывать умным домом. 
 
-В обратку реализовано включение выключение радиовыключателей света LIVOLO. Чтобы гарантировано включать или выключать, используются сцены. Т.е. выключатель программируется на первую сцену включенным. А на вторую как выключеный. Таким образом удалось избежать переключения, как с пульта. А именно включение или выключение. Управление идет также по MQTT. Выставляется TOPIC livolo/switch(1..9) и сообщение в него 0 или 1. Для обучения выключателей необходимо перевести его в режим обучения и после сигнала выбрать состояние включен или выключен. Соответственно на состояние включен - посылаем комманду 1 и обучаем его включаться. А на состояние выключен - посылаем комманду 0 и обучаем выключаться.
+Gateway y control basado en ESP8266 y modulos transmisor y receptores 433,92 Mhz o transceptores.
+Hace uso de la generacion interna de codigos de id remoto (testados hasta un numero de 30) y de los codigos de escenas I y II de Livolo lo que nos permite la gestion mediante comandos de ON y de OFF de forma separada y asi poder evitar usar los habitaules comandos unicos para cambio ON/OFF.
+La programacion de los interruptores se hace de forma muy sencilla poniendo el interruptor en modo apredizaje o programacion (pulsandolo durante 5 segundos) y dejandolo en el estado de encendido o apagado que se requiera programar y a continuacion enviar el comando de encendido o apagado correspondiente al estado a programar del interruptor.
+La forma de la orden MQTT topic/subtopic y comando es la siguiente:
+livolo/switch1...30/0 o 1
+Ejemplo para encendido del switch 1
+l1volo/switch1/1
+Topic: livolo
+Subtopic: switch1 (1 a 30)
+Comando:0 (OFF) o 1 (ON)
+
+
