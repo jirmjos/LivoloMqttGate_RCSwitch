@@ -1,26 +1,30 @@
-//#define DEBUG        // разрешена ли отладка
-#define RCSW           // поддержка устройств совместимых с RCSWITCH
-#define CLIENT_ID       "RCSWG1" // имя в системе MQTT
-#define SUBSCR_TOPIC    "livolo/#" // топик выключателей MQTT
-#define LIV_SW "livolo/switch%d" // строка выключателей MQTT
-#define LIV_PULT 2133   //начальный код пульта
-#define sw_cnt          9 // число пультов LIVOLO
-#define send_rpt        3 // число повторов отправки радио сигнала
-#define TOPIC_TREE "433mhz/%Xh" //шаблон отправки данных MQTT
-#define TOPIC_VAL "%Xh" // шаблон значение в MQTT
-#define SIGNAL_IN 1     //пин прерывание приемника 0 = DIGITAL PIN 2, 1 - PIN4
-#define TRANS_OUT 4     //пин передатчика
-#define BUFFERSIZE 50   // буфер приемника сигналов
-#define WAITAFTERSIGNAL 500 // сколько ждать после получения радиосигнала до обработки следующего
-// топики и коды пультов LIVOLO
-#define CODE_ON 10      //код сцены 1
-#define CODE_OFF 18     //код сцены 2
-#define UPDATE_STATE   //обновлять состояние света после включения
+#define DEBUG        // Descomentar para habilitar la depuracion con mensajes por el puerto serie
+#define RCSW           // Para poder procesar dispositivos de radio 433Mhz compatibles con RCSWITCH
+#define CLIENT_ID       "RCSWG1" // Nombre de nodo presentado en sevidor de MQTT
+#define SUBSCR_TOPIC    "livolo/#" // Tema MQTT para interruptores
+#define LIV_SW "livolo/switch%d" // Cadena MQTT para cada intrruptor (%d=1...n donde n es el numero total de interruptores)
+#define LIV_PULT 2133   //Codigo idRemoto Livolo de inicio
+#define sw_cnt          9 // Num. total de interruptores LIVOLO
+#define send_rpt        3 // Num de reintentos de envio de señal de radio
+#define TOPIC_TREE "433mhz/%Xh" //Plantilla del arbol MQTT
+#define TOPIC_VAL "%Xh" // Valores para la plantilla del arbol MQTT
+#define SIGNAL_IN 1     //Pin de conexion receptor radio 433Mhz 0 = DIGITAL PIN 2, 1 - PIN4
+#define TRANS_OUT 4     //Pin de conexion transmisor radio 433Mhz
+#define BUFFERSIZE 50   // Buffer de recepcion de mensajes radio
+#define WAITAFTERSIGNAL 500 // Tiempo de espera para siguiente procesamiento al recibir nueva señal radio
+// Codigos LIVOLO
+#define CODE_ON 10      //Escena 1 (la asociaremos al estado de encendido del interruptor)
+#define CODE_OFF 18     //Escena 1 (la asociaremos al estado de apagado del interruptor)
+#define UPDATE_STATE   //Actualizar el estado de todas las unidades
 
+#include "WIFI_and_broker_parameters.h" //parametros especificos para conexion a wi-fi y broker MQTT
 
-#include <UIPEthernet.h>
+//#include <UIPEthernet.h> //Si usamos ethernet en arduino
+#include <ESP8266WiFi.h>
 #include "PubSubClient.h"
 #include "livolo.h"
+WiFiClient wifiClient;
+//EthernetClient ethClient; /Si usamos ethernet en arduino
 
 #ifdef RCSW
 #include <RCSwitch.h>
@@ -43,7 +47,7 @@ volatile int i;
 volatile byte state[sw_cnt]; 
 
 const uint8_t mac[6] = {0x13,0x12,0x19,0x77,0x00,0x01};
-const byte server[] = { 192, 168, 102, 2 }; // mqtt server
+const byte server[] = { 192, 168, 1, 10 }; // mqtt server
 volatile long previousMillis;
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -75,21 +79,28 @@ void callback(char* topic, byte* payload, unsigned int length) {
      }
   }
 }
-EthernetClient ethClient;
-PubSubClient mqttClient(server, 1883, callback, ethClient);
 
+PubSubClient mqttClient(server, 1883, callback, wifiClient);
 
 void setup() {
   #ifdef DEBUG
   Serial.begin(9600);
-  Serial.println(F("DSI RCSwitch v2.2 sergey@krutyko.ru"));
+  Serial.println(F("Livolo Switchs Handler v1.0 @jirm - 2017"));
   #endif
-  if(Ethernet.begin(mac) == 0) {
+    WiFi.begin(WLAN_SSID, WLAN_PASS);
+    //if(Ethernet.begin(mac) == 0) {
+     #ifdef DEBUG
+     Serial.print("Connecting to WIFI");
+     #endif
+     while (WiFi.status() != WL_CONNECTED) 
+    {
+      Serial.print(".");
+      delay(1000);
+    }
     #ifdef DEBUG
-    Serial.println(F("DHCP failed"));
+    Serial.println("Connected to WIFI!");
     #endif 
     for(;;);
-  }
 
  #ifdef UPDATE_STATES
   for (i=0;i<sw_cnt;i++) {
@@ -105,7 +116,7 @@ void setup() {
 void calcInput()
 {
   #ifdef RCSW
-  mySwitch.handleInterrupt();
+    mySwitch.handleInterrupt();
   #endif
   
   // get the time using micros
@@ -159,15 +170,14 @@ void recieve()
 {
 #ifdef RCSW
    if (mySwitch.available()) {
-    
-    int value = mySwitch.getReceivedValue();
+     int value = mySwitch.getReceivedValue();
      mySwitch.resetAvailable();
      sprintf(topic, TOPIC_TREE, value);
      sprintf(msg, TOPIC_VAL, micros());
       #ifdef DEBUG
-      Serial.println('Send to MQTT:');
-      Serial.println(topic);
-      Serial.println(msg);
+        Serial.println('Send to MQTT:');
+        Serial.println(topic);
+        Serial.println(msg);
       #endif
       reconnect();
       mqttClient.publish(topic,msg);
@@ -237,5 +247,4 @@ void loop() {
   reconnect();
   mqttClient.loop();
 }
-
 
