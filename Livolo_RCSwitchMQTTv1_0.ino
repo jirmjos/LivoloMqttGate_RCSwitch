@@ -19,8 +19,8 @@
 
 #include "WIFI_and_broker_parameters.h" //parametros especificos para conexion a wi-fi y broker MQTT
 
-//#include <UIPEthernet.h> //Si usamos ethernet en arduino
-#include <ESP8266WiFi.h>
+//#include <UIPEthernet.h> //Si usaramos ethernet en arduino que no es el caso en el ESP8266
+#include <ESP8266WiFi.h> //usamos wifi
 #include "PubSubClient.h"
 #include "livolo.h"
 WiFiClient wifiClient;
