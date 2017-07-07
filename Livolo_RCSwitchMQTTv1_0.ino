@@ -4,12 +4,12 @@
 #define SUBSCR_TOPIC    "livolo/#" // Tema MQTT para interruptores
 #define LIV_SW "livolo/switch%d" // Cadena MQTT para cada intrruptor (%d=1...n donde n es el numero total de interruptores)
 #define LIV_PULT 2133   //Codigo idRemoto Livolo de inicio
-#define sw_cnt          9 // Num. total de interruptores LIVOLO
+#define sw_cnt          30 // Num. total de interruptores LIVOLO (30 testados en la practica)
 #define send_rpt        3 // Num de reintentos de envio de señal de radio
 #define TOPIC_TREE "433mhz/%Xh" //Plantilla del arbol MQTT
 #define TOPIC_VAL "%Xh" // Valores para la plantilla del arbol MQTT
-#define SIGNAL_IN 1     //Pin de conexion receptor radio 433Mhz 0 = DIGITAL PIN 2, 1 - PIN4
-#define TRANS_OUT 4     //Pin de conexion transmisor radio 433Mhz
+#define SIGNAL_IN D2     //Pin de conexion receptor radio 433Mhz (En Wemos D1 R2 mini)
+#define TRANS_OUT D1     //Pin de conexion transmisor radio 433Mhz (En Wemos D1 R2 mini)
 #define BUFFERSIZE 50   // Buffer de recepcion de mensajes radio
 #define WAITAFTERSIGNAL 500 // Tiempo de espera para siguiente procesamiento al recibir nueva señal radio
 // Codigos LIVOLO
