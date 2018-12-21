@@ -16,7 +16,7 @@ Example for switching on switch 1.
 (main topic path).../livolo/switch1/1.
 
 Topic: livolo.
-Subtopic: switch1 (1 to 30).
+Subtopic: switch1 (01 to 99).
 Command: 0 (OFF) or 1 (ON).
 
 
