@@ -1,22 +1,22 @@
 ## RCSwitchMqttGate
 Remote Control and MQTT Gateway of Livolo Switch & Other (RCSwitch library supported devices) 433Mhz devices
 ##
-Gateway MQTT orientado al control RF de interruptores Livolo y tambien los soportados por la propia libreria RCSwitch basado en hardware de Expresiff ESP8266 y cualesquiera de los tipicos modulos OOK/ASK de transmisor y receptor de 433,92 Mhz (STX882/SRX802, RBX06, TA1001, etc...) o transceptores OOK de 433 (RFM69).
+MQTT Gateway oriented to the RF control of Livolo switches and also those supported by the own RCSwitch library based on Expresiff microcontroller ESP8266 with any of the typical OOK / ASK modules of transmitter and receiver of 433.92 Mhz (STX882 / SRX802, RBX06, TA1001 , etc ...) or OOK transceivers of 433 (RFM69).
 ##
-Hace uso de la generacion interna de codigos de id remoto (testados en la practica hasta un total de 30 codigos) y de los codigos de escenas I y II (code 10 y code 18 de room 1) de Livolo lo que nos permite la gestion mediante comandos de ON y de OFF de forma separada y asi poder evitar usar los mas habituales comandos unicos de conmutacion ON/OFF.
+It makes use of internal generation remote id livolo codes (tested working a total of 30 codes) with the support of the additional use of scene codes I and II (code 10 and code 18 for room 1) to allows us the management using separately ON and OFF commands for thus avoid using the only toggle ON / OFF switch command that usually leave the device in a unknow state.
 ##
-La programacion de los interruptores se hace de forma muy sencilla poniendo el interruptor en modo apredizaje o programacion (pulsandolo durante 5 segundos) y dejandolo en el estado de encendido o apagado que se requiera programar y a continuacion enviar el comando de encendido o apagado correspondiente al estado a programar del interruptor.
+The livolo switch "pairing" is done very easily by placing the switch in learn/pairing mode (by pressing it for 5 seconds) and sending to the device the On or the Off command corresponding to the desired device state.
 ##
-La forma de la orden MQTT topic/subtopic y comando es la siguiente. 
+The form of the MQTT command topic / subtopic and command is as easy as follows.
 
-livolo/switch(1...30)/(0 o 1).
+(main topic path).../livolo/switch (1 ... 30) / (0 or 1).
 
-Ejemplo para encendido del switch 1.
+Example for switching on switch 1.
 
-livolo/switch1/1.
+(main topic path).../livolo/switch1/1.
 
 Topic: livolo.
-Subtopic: switch1 (1 a 30).
-Comando:0 (OFF) o 1 (ON).
+Subtopic: switch1 (1 to 30).
+Command: 0 (OFF) or 1 (ON).
 
 
