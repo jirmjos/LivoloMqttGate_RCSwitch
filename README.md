@@ -19,4 +19,4 @@ Topic: livolo.
 Subtopic: switch1 (01 to 99).
 Command: 0 (OFF) or 1 (ON).
 
-
+NOTE: Original idea and source code from https://github.com/SergeyKrutyko/RCSwitchMqttGate
