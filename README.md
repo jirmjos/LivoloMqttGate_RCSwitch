@@ -11,12 +11,11 @@ The form of the MQTT command topic / subtopic and command is as easy as follows.
 
 (main topic path).../livolo/switch (1 ... 30) / (0 or 1).
 
-Example for switching on switch 1.
+Example for switching on switch 01
+(main topic path...)/livolo/switch01
+Payload: 1
 
-(main topic path).../livolo/switch1/1.
-
-Topic: livolo.
-Subtopic: switch1 (01 to 99).
-Command: 0 (OFF) or 1 (ON).
+Subtopic ... /livolo/switch(01 to 99)
+Command: 0 (OFF) or 1 (ON)
 
 NOTE: Original idea and source code from https://github.com/SergeyKrutyko/RCSwitchMqttGate
