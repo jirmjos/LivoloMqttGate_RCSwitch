@@ -110,7 +110,7 @@ PubSubClient mqttClient(server, 1883, callback, wifiClient);
 void setup() {
   #ifdef DEBUG
   Serial.begin(9600);
-  Serial.println(F("Livolo Switchs Handler v1.0 @jirm - 2017"));
+  Serial.println(F("Livolo Switchs Handler v2.1 @jirm - 2018"));
   #endif
     WiFi.begin(WLAN_SSID, WLAN_PASS);
     //if(Ethernet.begin(mac) == 0) {
