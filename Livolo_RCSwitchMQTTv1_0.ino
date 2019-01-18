@@ -13,8 +13,12 @@
 #define BUFFERSIZE 50   // Buffer de recepcion de mensajes radio
 #define WAITAFTERSIGNAL 500 // Tiempo de espera para siguiente procesamiento al recibir nueva señal radio
 // Codigos LIVOLO
-#define CODE_ON 10      //Escena 1 (la asociaremos al estado de encendido del interruptor)
-#define CODE_OFF 18     //Escena 1 (la asociaremos al estado de apagado del interruptor)
+// Para disponer de comandos independientes de on y off usamos cualquiera de los codigos de control de escena para el comando on
+#define SC1CODE_ON 10      //Escena 1 (la asociaremos al estado de encendido del interruptor)
+#define SC2CODE_ON 18     //Escena 1 (la asociaremos al estado de apagado del interruptor)
+#define SC3CODE_ON 90      //Escena 2 (la asociaremos al estado de encendido del interruptor)
+#define SC4CODE_ON 114    //Escena 2 (la asociaremos al estado de apagado del interruptor)
+#define SCCODE_ONOFF 120      //Codigo on/off conmutando: Usar para
 #define UPDATE_STATE   //Actualizar el estado de todas las unidades
 
 #include "WIFI_and_broker_parameters.h" //parametros especificos para conexion a wi-fi y broker MQTT
@@ -71,7 +75,28 @@ void callback(char* topic, byte* payload, unsigned int length) {
         #endif
         noInterrupts();
         for (i=0;i<send_rpt;i++) {
-         livolo.sendButton(remote,code); 
+         // Radio send
+          int remote = ((LIV_PULT + sw_num) * 3) + 1; //calculate livolo remoteid but avoid codes for only togle mode on/off          int code;
+          if (sw_num <95){  //reserve codes 95 to 99 for dimmers
+            if (st == 0) { //send 0 to turn switch off
+              code = SCCODE_OFF;
+            } 
+            if (st == 1) { //send 1 to turn switch on and for learning the on code
+              remote=remote+100; //need generate another remote id for use a scene to switch to on without use togle
+              code = SC3CODE_ON;
+            } 
+            if (st == 2) { //send 2 only to learning the off code
+              code = SCCODE_ONOFF;
+            }
+            } else { //switch num from 95 to 99 for dimmer because need other specific remote id
+              if (st == 0) { //send 0 to turn switch to off and to dimmer learn off 
+                code = SC4CODE_ON;
+              } 
+              if (st == 1) { //send 1 to turn switch to on and to dimmer learn on
+                code = SC3CODE_ON;
+              } 
+          }          
+          livolo.sendButton(remote, code); //RF send command to switch
          }
         interrupts();
         break;
