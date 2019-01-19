@@ -9,8 +9,7 @@ All switch type are now supported combining scenes to push it to on and "standar
 Switch numbers from 95 to 99 (both included) are reserved for dimmer management because in this case no "standard" all off code command are supported.
 Actually I have limited on code a total range switch management to 100 devices (00 to 99) that I think is more than enough to majority of uses, but of course this range can be extended with tribial code changes.
 ##
-The livolo switch "pairing" now is done very easily by placing the switch in learn/pairing mode (by pressing it for 5 seconds) and send to the livolo device the On or the Off command corresponding to the desired device state.
-You need do the pairing two times one corresponding to on state and once more to the off state.
+The livolo switch "pairing" now is done very easily by placing the switch in learn/pairing mode (by pressing it for 5 seconds until hear one beep) and send to the livolo device the On and Off command. Of course , you need do the pairing two times one corresponding to On state and repeat pairing process for the Off state.
 ##
 
 The generic form of the MQTT command topic / subtopic and command is as easy as follows:
