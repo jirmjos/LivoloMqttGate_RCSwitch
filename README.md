@@ -10,6 +10,7 @@ Switch numbers from 95 to 99 (both included) are reserved for dimmer management 
 Actually I have limited on code a total range switch management to 100 devices (00 to 99) that I think is more than enough to majority of uses, but of course this range can be extended with tribial code changes.
 ##
 The livolo switch "pairing" now is done very easily by placing the switch in learn/pairing mode (by pressing it for 5 seconds until hear one beep) and send to the livolo device the On and Off command. Of course , you need do the pairing two times one corresponding to On state and repeat pairing process for the Off state.
+NOTE: Making the On pairing process you only need take care the switch device state remains On (red light). This is default state when you put the device switch to pairing, but better you knows that.
 ##
 
 The generic form of the MQTT command topic / subtopic and command is as easy as follows:
