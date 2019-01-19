@@ -5,7 +5,7 @@ MQTT Gateway based on Expressif microcontroller ESP8266 oriented to the RF contr
 ##
 It makes use of internal autogeneration of remote id livolo codes (tested working with all type of switch devices) with the support of the additional use of scene codes I and II (code 10, 18, 90, 114...) that allows us the management using separately ON and OFF commands for thus avoid using the only toggle ON / OFF switch command that leave the device in a unknow state because their lack of feedback.
 ##
-All switch type are now supported combining scenes to push it to on and "standard" all off command (two ways switch are limited to learn only one scene code id).
+All switch type are now supported combining scenes to push it to on and "standard" all off command (livolo two ways switch are limited to learn only one scene code id).
 Switch numbers from 95 to 99 (both included) are reserved for dimmer management because in this case no "standard" all off code command are supported.
 Actually I have limited on code a total range switch management to 100 devices (00 to 99) that I think is more than enough to majority of uses, but of course this range can be extended with tribial code changes.
 ##
