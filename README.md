@@ -19,5 +19,6 @@ The generic form of the MQTT command topic / subtopic and command is as easy as 
 Example for command to switching on switch=01:
 (main topic path).../livolo/switch01
 Payload: 1 (ON)
+OTE: You need to use two digits on switch number because my quick dirty way of parsing mqtt command, but I thing too is better when reading mqqt command.
 
 NOTE: Original idea and source code from https://github.com/SergeyKrutyko/RCSwitchMqttGate
