@@ -13,7 +13,7 @@ The livolo switch "pairing" now is done very easily by placing the switch in lea
 ##
 
 The generic form of the MQTT command topic / subtopic and command is as easy as follows:
-(main topic path).../livolo/switch(1 ... 99)  and Payload 0 (off) or 1(on).
+(main topic path).../livolo/switch(00 ... 99)  and Payload 0 (off) or 1(on).
 
 Example for command to switching on switch=01:
 (main topic path).../livolo/switch01
