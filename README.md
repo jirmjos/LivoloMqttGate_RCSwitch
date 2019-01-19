@@ -6,8 +6,8 @@ MQTT Gateway based on Expressif microcontroller ESP8266 oriented to the RF contr
 It makes use of internal autogeneration of remote id livolo codes (tested working with all type of switch devices) with the support of the additional use of scene codes I and II (code 10, 18, 90, 114...) that allows us the management using separately ON and OFF commands for thus avoid using the only toggle ON / OFF switch command that leave the device in a unknow state because their lack of feedback.
 ##
 All switch type are now supported combining scenes to push it to on and "standard" all off command (livolo two ways switch are limited to learn only one scene code id).
-Switch numbers from 95 to 99 (both included) are reserved for dimmer management because in this case no "standard" all off code command are supported.
 Actually I have limited on code a total range switch management to 100 devices (00 to 99) that I think is more than enough to majority of uses, but of course this range can be extended with tribial code changes.
+Switch numbers from 00 to 94 are for switch devices and 95 to 99 (both included) are reserved for dimmer management because in this case no "standard" all off code command are supported.
 ##
 The livolo switch "pairing" now is done very easily by placing the switch in learn/pairing mode (by pressing it for 5 seconds until hear one beep) and send to the livolo device the On and Off command. Of course , you need do the pairing two times one corresponding to On state and repeat pairing process for the Off state.
 NOTE: Making the On pairing process you only need take care the switch device state remains On (red light). This is default state when you put the device switch to pairing, but better you knows that.
